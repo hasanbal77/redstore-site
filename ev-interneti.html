@@ -28,9 +28,9 @@
 <div class="container hero-grid">
 <div>
 <h1>Ev İnterneti Başvurusu</h1>
-<p>Vodafone Net ev interneti paketlerinden birini seçin. Adres ve kimlik bilgilerinizi girin; başvurunuz bize gelsin.</p>
+<p>Bir paket seçin, bilgilerinizi girin ve başvurunuzu gönderin. Başvurunuz Redstore İletişim ekibine ulaşır.</p>
 <div class="small">
-Not: Paketleri Vodafone’dan otomatik çekmeyi sonraki adımda deneyeceğiz. Şimdilik örnek paketler var.
+Not: Vodafone’dan paketleri otomatik çekmeyi sonraki adımda deneyeceğiz. Şimdilik örnek paketler var.
 </div>
 </div>
 
@@ -62,21 +62,21 @@ Not: Paketleri Vodafone’dan otomatik çekmeyi sonraki adımda deneyeceğiz. Ş
 <h3>50 Mbps</h3>
 <p>Limitsiz internet</p>
 <p><strong>₺XXX / ay</strong></p>
-<button class="btn" onclick="selectPlan('50 Mbps')">Seç</button>
+<button class="btn" type="button" onclick="selectPlan('50 Mbps')">Seç</button>
 </div>
 
 <div class="card">
 <h3>100 Mbps</h3>
 <p>Yüksek hız</p>
 <p><strong>₺XXX / ay</strong></p>
-<button class="btn" onclick="selectPlan('100 Mbps')">Seç</button>
+<button class="btn" type="button" onclick="selectPlan('100 Mbps')">Seç</button>
 </div>
 
 <div class="card">
 <h3>200 Mbps</h3>
 <p>Ultra hız</p>
 <p><strong>₺XXX / ay</strong></p>
-<button class="btn" onclick="selectPlan('200 Mbps')">Seç</button>
+<button class="btn" type="button" onclick="selectPlan('200 Mbps')">Seç</button>
 </div>
 </div>
 </div>
@@ -85,25 +85,26 @@ Not: Paketleri Vodafone’dan otomatik çekmeyi sonraki adımda deneyeceğiz. Ş
 <div id="basvuru" class="container section">
 <h2>Başvuru Formu</h2>
 
-<!-- Teşekkür mesajı (başta gizli) -->
+<!-- HATA KUTUSU -->
+<div id="errorBox" class="card" style="display:none;">
+<strong>Gönderim başarısız</strong>
+<div class="small" id="errorText" style="margin-top:6px;"></div>
+</div>
+
+<!-- TEŞEKKÜR KUTUSU -->
 <div id="thanksBox" class="card" style="display:none;">
 <h3>Başvurunuz alındı ✅</h3>
 <p>Teşekkürler. Başvurunuz Redstore İletişim ekibine ulaştı. En kısa sürede sizinle iletişime geçeceğiz.</p>
-<p class="small">Eğer acilse mağazamıza uğrayabilir veya tekrar başvuru oluşturabilirsiniz.</p>
+<p class="small">Acilse mağazamıza uğrayabilirsiniz. İsterseniz başka paket için tekrar başvuru yapabilirsiniz.</p>
 <a class="btn" href="./index.html">Ana Sayfa</a>
+<a class="btn secondary" href="./ev-interneti.html">Yeni Başvuru</a>
 </div>
 
 <!-- FORM -->
 <div id="formBox" class="card form-card">
-<form
-id="evForm"
-action="https://formspree.io/f/mpqjnyyp"
-method="POST"
-enctype="multipart/form-data"
->
-<!-- Formspree için başlık -->
-<input type="hidden" name="_subject" value="Redstore | Ev İnterneti Başvurusu">
+<form id="evForm" enctype="multipart/form-data">
 <input type="hidden" name="hizmet_tipi" value="Ev İnterneti">
+<input type="hidden" name="_subject" value="Redstore | Ev İnterneti Başvurusu">
 
 <div class="form-grid">
 <input name="ad_soyad" placeholder="Ad Soyad" required>
@@ -121,22 +122,23 @@ enctype="multipart/form-data"
 <input name="bina_no" placeholder="Bina No" required>
 <input name="daire_no" placeholder="Daire No" required>
 
+<!-- Dosya alanları (şimdilik zorunlu değil) -->
 <div>
-<label>Kimlik Ön Yüz</label>
-<input name="kimlik_on" type="file" accept="image/*,.pdf" required>
-<div class="small">Fotoğraf veya PDF yükleyebilirsiniz.</div>
+<label>Kimlik Ön Yüz (opsiyonel)</label>
+<input name="kimlik_on" type="file" accept="image/*,.pdf">
+<div class="small">Dosya gönderimi bazı planlarda kısıtlı olabilir.</div>
 </div>
 
 <div>
-<label>Kimlik Arka Yüz</label>
-<input name="kimlik_arka" type="file" accept="image/*,.pdf" required>
-<div class="small">Fotoğraf veya PDF yükleyebilirsiniz.</div>
+<label>Kimlik Arka Yüz (opsiyonel)</label>
+<input name="kimlik_arka" type="file" accept="image/*,.pdf">
+<div class="small">Gerekirse kimliği WhatsApp’tan isteyeceğiz.</div>
 </div>
 </div>
 
 <hr>
-<button class="btn" type="submit">Başvuruyu Gönder</button>
-<div class="small">Gönderim sonrası ekranda teşekkür mesajı görünecek.</div>
+<button class="btn" id="sendBtn" type="submit">Başvuruyu Gönder</button>
+<div class="small" id="statusText" style="margin-top:8px;"></div>
 </form>
 </div>
 </div>
@@ -150,27 +152,85 @@ Vodafone Yetkili Franchise Bayisi<br>
 <span class="small">Kuruluş: 2022</span>
 </div>
 <div class="small">
-Ev interneti başvurularınız için formu doldurun; size dönüş yapalım.
+Ev interneti başvurularınızı buradan bırakın; size dönüş yapalım.
 </div>
 </div>
 </div>
 
 <script>
+// Formspree endpoint
+const ENDPOINT = "https://formspree.io/f/mpqjnyyp";
+
 function selectPlan(name) {
-document.getElementById('paket').value = name;
+const el = document.getElementById('paket');
+if (el) el.value = name;
 location.hash = '#basvuru';
 }
 
-// Teşekkür ekranı (Formspree yönlendirmesini beklemeden)
-// Not: Formspree bazen kendi teşekkür sayfasına yönlendirebilir.
-// Bu script, gönderimden sonra ekranda teşekkür göstermeye yardımcı olur.
-document.getElementById('evForm').addEventListener('submit', function () {
-// Kullanıcı butona basınca hemen teşekkür göstermek için küçük gecikme
-setTimeout(() => {
-document.getElementById('formBox').style.display = 'none';
-document.getElementById('thanksBox').style.display = 'block';
+window.addEventListener('DOMContentLoaded', () => {
+const form = document.getElementById('evForm');
+const formBox = document.getElementById('formBox');
+const thanksBox = document.getElementById('thanksBox');
+const errorBox = document.getElementById('errorBox');
+const errorText = document.getElementById('errorText');
+const statusText = document.getElementById('statusText');
+const sendBtn = document.getElementById('sendBtn');
+
+form.addEventListener('submit', async (e) => {
+e.preventDefault();
+errorBox.style.display = 'none';
+statusText.textContent = '';
+
+// Paket seçilmemişse
+const paket = (document.getElementById('paket')?.value || '').trim();
+if (!paket) {
+errorText.textContent = "Lütfen önce bir paket seçin (Seç butonu).";
+errorBox.style.display = 'block';
 location.hash = '#basvuru';
-}, 400);
+return;
+}
+
+// Gönderim başlıyor
+sendBtn.disabled = true;
+statusText.textContent = "Gönderiliyor...";
+
+const data = new FormData(form);
+
+try {
+const res = await fetch(ENDPOINT, {
+method: 'POST',
+body: data,
+headers: { 'Accept': 'application/json' }
+});
+
+if (res.ok) {
+// Başarılı
+formBox.style.display = 'none';
+thanksBox.style.display = 'block';
+location.hash = '#basvuru';
+return;
+}
+
+// Hata mesajı
+let msg = `Formspree hata verdi (HTTP ${res.status}).`;
+try {
+const j = await res.json();
+if (j?.errors?.length) msg = j.errors.map(x => x.message).join(' | ');
+} catch {}
+
+errorText.textContent = msg;
+errorBox.style.display = 'block';
+location.hash = '#basvuru';
+
+} catch (err) {
+errorText.textContent = "Bağlantı/servis hatası. Tekrar deneyin.";
+errorBox.style.display = 'block';
+location.hash = '#basvuru';
+} finally {
+sendBtn.disabled = false;
+statusText.textContent = "";
+}
+});
 });
 </script>
 
