@@ -1,13 +1,101 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ev İnterneti | Redstore İletişim</title>
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+<div class="nav">
+<div class="container nav-inner">
+<div class="brand">
+<div>Redstore İletişim</div>
+<span class="badge">Vodafone Yetkili Franchise</span>
+</div>
+<div class="nav-links">
+<a href="./index.html">Ana Sayfa</a>
+<a href="#paketler">Paketler</a>
+<a href="#basvuru">Başvuru</a>
+</div>
+</div>
+</div>
+
+<div class="hero">
+<div class="container hero-grid">
+<div>
+<h1>Ev İnterneti Başvurusu</h1>
+<p>Vodafone Net ev interneti paketlerinden birini seçin, adres bilgilerinizi girin ve kimlik ön/arka yükleyerek başvurunuzu bırakın.</p>
+<div class="small">Not: Paketleri Vodafone sitesinden otomatik çekmeyi sonraki adımda deneyeceğiz. Şimdilik örnek paketler var.</div>
+</div>
+<div class="quick-actions">
+<div class="qa">
+<div class="icon">🌐</div>
+<div>
+<strong>Hızlı Başvuru</strong>
+<div class="small">Geri dönüş yapılır</div>
+</div>
+</div>
+<div class="qa">
+<div class="icon">✅</div>
+<div>
+<strong>Yetkili Bayi</strong>
+<div class="small">Kurumsal güven</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="paketler" class="container section">
+<h2>Ev İnternet Paketleri</h2>
+<div class="grid">
+
+<div class="card">
+<h3>50 Mbps</h3>
+<p>Limitsiz internet</p>
+<p><strong>₺XXX / ay</strong></p>
+<button class="btn" onclick="selectPlan('50 Mbps')">Seç</button>
+</div>
+
+<div class="card">
+<h3>100 Mbps</h3>
+<p>Yüksek hız</p>
+<p><strong>₺XXX / ay</strong></p>
+<button class="btn" onclick="selectPlan('100 Mbps')">Seç</button>
+</div>
+
+<div class="card">
+<h3>200 Mbps</h3>
+<p>Ultra hız</p>
+<p><strong>₺XXX / ay</strong></p>
+<button class="btn" onclick="selectPlan('200 Mbps')">Seç</button>
+</div>
+
+</div>
+</div>
+
+<div id="basvuru" class="container section">
+<h2>Başvuru Formu</h2>
+
+<div class="card form-card">
+<!-- Şimdilik form sadece görsel. Gmail'e gönderme sonraki adımda bağlanacak -->
 <form>
 <div class="form-grid">
+
 <input placeholder="Ad Soyad" required>
-<input placeholder="Telefon" required>
+<input placeholder="Telefon (05xx...)" required>
+
 <input id="paket" placeholder="Seçilen Paket" readonly required>
+<input placeholder="T.C. Kimlik No" required>
 
 <input placeholder="İl" required>
 <input placeholder="İlçe" required>
+
 <input placeholder="Mahalle" required>
-<input placeholder="Sokak" required>
+<input placeholder="Sokak / Cadde" required>
+
 <input placeholder="Bina No" required>
 <input placeholder="Daire No" required>
 
@@ -22,6 +110,33 @@
 </div>
 
 </div>
-<br>
-<button class="btn">Başvur</button>
+
+<hr>
+<button class="btn" type="submit">Başvuruyu Gönder</button>
+<div class="small">Başvuruların Gmail’e düşmesi için bir sonraki adımda formu bağlayacağız.</div>
 </form>
+</div>
+</div>
+
+<div class="footer">
+<div class="container footer-grid">
+<div>
+<strong>Redstore İletişim</strong><br>
+Vodafone Yetkili Franchise Bayisi<br>
+<span class="small">Kuruluş: 2022</span>
+</div>
+<div class="small">
+Ev interneti için paket seçip başvuru oluşturabilirsiniz.
+</div>
+</div>
+</div>
+
+<script>
+function selectPlan(name) {
+document.getElementById('paket').value = name;
+location.hash = '#basvuru';
+}
+</script>
+
+</body>
+</html>
