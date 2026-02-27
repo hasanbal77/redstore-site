@@ -1,53 +1,234 @@
-<form id="basvuruForm">
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ev İnterneti Başvuru | Redstore İletişim</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+/* styles.css bozulsa bile düzgün görünsün diye mini güvenli stil */
+.wrap{max-width:900px;margin:30px auto;padding:0 16px;font-family:Arial}
+.card{background:#fff;border-radius:12px;padding:18px;box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+label{font-size:13px;color:#333}
+input,select,button{width:100%;padding:10px;border:1px solid #ddd;border-radius:10px}
+button{cursor:pointer;border:none;background:#e60000;color:#fff;font-weight:700}
+button[disabled]{opacity:.6;cursor:not-allowed}
+.muted{color:#666;font-size:12px}
+.ok{color:#0a7b2f;font-size:13px}
+.err{color:#b00020;font-size:13px}
+.hide{display:none}
+@media (max-width:720px){
+.grid,.grid-3{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
 <h2>Ev İnterneti Başvuru</h2>
+<p class="muted">Vodafone Net ev interneti başvurunuzu hızlıca alın. Kimlik görselleri güvenli şekilde yüklenir, sonra başvuru iletilir.</p>
 
-<input name="adsoyad" placeholder="Ad Soyad" required>
-<input name="telefon" placeholder="Telefon" required>
+<div class="card">
+<!-- Formspree endpointini buraya yaz -->
+<!-- ÖRNEK: https://formspree.io/f/mpqjnyyp -->
+<form id="evForm">
+<div class="grid">
+<div>
+<label>Ad Soyad</label>
+<input name="ad_soyad" placeholder="Ad Soyad" required>
+</div>
+<div>
+<label>Telefon</label>
+<input name="telefon" placeholder="05xx xxx xx xx" required>
+</div>
+</div>
 
+<div style="height:10px"></div>
+
+<div>
+<label>Seçilen Paket</label>
+<select id="paket" name="paket" required>
+<option value="">Paket seçin...</option>
+<option>Vodafone Ev İnterneti 100 Mbps</option>
+<option>Vodafone Ev İnterneti 200 Mbps</option>
+<option>Vodafone Ev İnterneti 500 Mbps</option>
+<option>Vodafone Ev İnterneti 1000 Mbps</option>
+</select>
+<div class="muted" style="margin-top:6px">
+Not: Vodafone sitesinden otomatik paket çekmek tarayıcı güvenliği (CORS) ve sayfa izinleri yüzünden genelde çalışmaz.
+İstersen paketleri senin istediğin fiyat/isimlerle burada güncelleriz.
+</div>
+</div>
+
+<div style="height:10px"></div>
+
+<div class="grid-3">
+<div>
+<label>İl</label>
 <input name="il" placeholder="İl" required>
+</div>
+<div>
+<label>İlçe</label>
 <input name="ilce" placeholder="İlçe" required>
+</div>
+<div>
+<label>Mahalle</label>
 <input name="mahalle" placeholder="Mahalle" required>
-<input name="sokak" placeholder="Sokak" required>
-<input name="bina" placeholder="Bina No" required>
-<input name="daire" placeholder="Daire No" required>
+</div>
+</div>
 
+<div style="height:10px"></div>
+
+<div class="grid">
+<div>
+<label>Sokak / Cadde</label>
+<input name="sokak" placeholder="Sokak / Cadde" required>
+</div>
+<div>
+<label>Bina No</label>
+<input name="bina_no" placeholder="Bina No" required>
+</div>
+</div>
+
+<div style="height:10px"></div>
+
+<div class="grid">
+<div>
+<label>Daire No</label>
+<input name="daire_no" placeholder="Daire No" required>
+</div>
+<div></div>
+</div>
+
+<div style="height:16px"></div>
+
+<div class="grid">
+<div>
 <label>Kimlik Ön Yüz</label>
-<input type="file" id="kimlikOn" required>
-
+<input id="kimlikOn" type="file" accept="image/*,.pdf" required>
+<div id="kimlikOnDurum" class="muted"></div>
+</div>
+<div>
 <label>Kimlik Arka Yüz</label>
-<input type="file" id="kimlikArka" required>
+<input id="kimlikArka" type="file" accept="image/*,.pdf" required>
+<div id="kimlikArkaDurum" class="muted"></div>
+</div>
+</div>
 
-<button type="submit">Başvur</button>
+<!-- Bu alanlara Blob URL yazılacak -->
+<input type="hidden" name="kimlik_on_url" id="kimlikOnUrl">
+<input type="hidden" name="kimlik_arka_url" id="kimlikArkaUrl">
+
+<div style="height:16px"></div>
+
+<button id="btnGonder" type="submit">Başvur</button>
+
+<div id="mesaj" style="margin-top:12px"></div>
 </form>
 
+<div id="tesekkur" class="hide">
+<h3>Teşekkürler ✅</h3>
+<p>Başvurunuz alındı. En kısa sürede sizinle iletişime geçeceğiz.</p>
+</div>
+</div>
+</div>
+
 <script>
-document.getElementById("basvuruForm").addEventListener("submit", async function(e) {
-e.preventDefault();
+// Formspree endpointini buraya yaz
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/mpqjnyyp"; // SENİN endpointin buysa kalsın
 
-const kimlikOn = document.getElementById("kimlikOn").files[0];
-const kimlikArka = document.getElementById("kimlikArka").files[0];
+const form = document.getElementById('evForm');
+const btn = document.getElementById('btnGonder');
+const msg = document.getElementById('mesaj');
+const tesekkur = document.getElementById('tesekkur');
 
-async function upload(file) {
-const res = await fetch("/api/upload", {
-method: "POST",
-body: file
-});
+const kimlikOnInput = document.getElementById('kimlikOn');
+const kimlikArkaInput = document.getElementById('kimlikArka');
+const kimlikOnUrl = document.getElementById('kimlikOnUrl');
+const kimlikArkaUrl = document.getElementById('kimlikArkaUrl');
+const kimlikOnDurum = document.getElementById('kimlikOnDurum');
+const kimlikArkaDurum = document.getElementById('kimlikArkaDurum');
 
-const data = await res.json();
-return data.url;
+async function uploadToBlob(file) {
+const fd = new FormData();
+fd.append("file", file);
+
+// DİKKAT: /api/upload (upload.js değil)
+const r = await fetch("/api/upload", { method: "POST", body: fd });
+if (!r.ok) {
+const t = await r.text().catch(()=> "");
+throw new Error("Upload hata: " + r.status + " " + t);
+}
+return await r.json(); // { url: "..." } bekliyoruz
 }
 
+async function handleUpload(inputEl, durumEl, hiddenUrlEl) {
+const file = inputEl.files && inputEl.files[0];
+if (!file) return;
+
+durumEl.className = "muted";
+durumEl.textContent = "Yükleniyor...";
+
 try {
-const onUrl = await upload(kimlikOn);
-const arkaUrl = await upload(kimlikArka);
+const out = await uploadToBlob(file);
+if (!out.url) throw new Error("URL dönmedi");
+hiddenUrlEl.value = out.url;
 
-alert("Başvuru alındı ✅");
+durumEl.className = "ok";
+durumEl.innerHTML = `Yüklendi ✅ (link: <a href="${out.url}" target="_blank">gör</a>)`;
+} catch (e) {
+hiddenUrlEl.value = "";
+durumEl.className = "err";
+durumEl.textContent = "Yükleme başarısız ❌ (" + e.message + ")";
+}
+}
 
-console.log("Kimlik Ön:", onUrl);
-console.log("Kimlik Arka:", arkaUrl);
+kimlikOnInput.addEventListener("change", () => handleUpload(kimlikOnInput, kimlikOnDurum, kimlikOnUrl));
+kimlikArkaInput.addEventListener("change", () => handleUpload(kimlikArkaInput, kimlikArkaDurum, kimlikArkaUrl));
 
-} catch(err) {
-alert("Yükleme başarısız ❌");
+form.addEventListener("submit", async (e) => {
+e.preventDefault();
+msg.textContent = "";
+msg.className = "";
+
+// Kimlik URL’leri oluştu mu?
+if (!kimlikOnUrl.value || !kimlikArkaUrl.value) {
+msg.className = "err";
+msg.textContent = "Kimlik yükleme tamamlanmadı. Ön/arka yüklenmiş olmalı.";
+return;
+}
+
+btn.disabled = true;
+btn.textContent = "Gönderiliyor...";
+
+try {
+const fd = new FormData(form);
+
+// Formspree’ye AJAX ile gönder (sayfa başka yere gitmesin)
+const r = await fetch(FORMSPREE_ENDPOINT, {
+method: "POST",
+headers: { "Accept": "application/json" },
+body: fd
+});
+
+if (!r.ok) {
+const t = await r.text().catch(()=> "");
+throw new Error("Form gönderimi hata: " + r.status + " " + t);
+}
+
+// Başarılı: formu gizle teşekkür göster
+form.classList.add("hide");
+tesekkur.classList.remove("hide");
+} catch (err) {
+msg.className = "err";
+msg.textContent = "Gönderim başarısız ❌ (" + err.message + ")";
+btn.disabled = false;
+btn.textContent = "Başvur";
 }
 });
 </script>
+
+</body>
+</html>
