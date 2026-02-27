@@ -4,48 +4,118 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Redstore İletişim</title>
-<style>
-body {margin:0;font-family:Arial;background:#f5f5f5;}
-header {background:#e60000;color:white;padding:30px;text-align:center;}
-h1 {margin:0;}
-.container {padding:20px;}
-.card {background:white;margin:15px 0;padding:20px;border-radius:10px;box-shadow:0 0 10px rgba(0,0,0,0.1);}
-button {background:#e60000;color:white;border:none;padding:10px 20px;border-radius:5px;font-size:16px;}
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
-<header>
-<h1>Redstore İletişim</h1>
-<p>Vodafone Telekomünikasyon Yetkili Franchise Bayisi</p>
-</header>
-
-<div class="container">
-
-<div class="card">
-<h2>Yeni Faturalı Hat</h2>
-<p>Aynı gün hızlı aktivasyon.</p>
-<button>Başvur</button>
+<div class="nav">
+<div class="container nav-inner">
+<div class="brand">
+<div>Redstore İletişim</div>
+<span class="badge">Vodafone Yetkili Franchise</span>
+</div>
+<div class="nav-links">
+<a href="#hizmetler">Hizmetler</a>
+<a href="#basvuru">Başvuru</a>
+</div>
+</div>
 </div>
 
-<div class="card">
-<h2>Numara Taşıma</h2>
-<p>Kesintisiz operatör geçişi.</p>
-<button>Başvur</button>
+<div class="hero">
+<div class="container hero-grid">
+<div>
+<h1>Vodafone Yetkili Bayiniz</h1>
+<p>Yeni hat, numara taşıma ve ev interneti başvurularınızı hızlıca yapın.</p>
+</div>
+<div class="quick-actions">
+<div class="qa">
+<div class="icon">📱</div>
+<div>
+<strong>Yeni Hat</strong>
+<div class="small">Aynı gün aktivasyon</div>
+</div>
+</div>
+<div class="qa">
+<div class="icon">🔄</div>
+<div>
+<strong>Numara Taşıma</strong>
+<div class="small">Kesintisiz geçiş</div>
+</div>
+</div>
+<div class="qa">
+<div class="icon">💻</div>
+<div>
+<strong>Cihaz Kampanyaları</strong>
+<div class="small">Faturaya ek cihaz</div>
+</div>
+</div>
+<div class="qa">
+<div class="icon">🌐</div>
+<div>
+<strong>Ev İnterneti</strong>
+<div class="small">Vodafone Net</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 
+<div id="hizmetler" class="container section">
+<h2>Hizmetlerimiz</h2>
+<div class="grid">
 <div class="card">
-<h2>Cihaz Satışı</h2>
-<p>Akıllı telefonlar ve aksesuarlar.</p>
-<button>Detay</button>
+<h3>Yeni Faturalı Hat</h3>
+<p>Vodafone güncel tarifeler ile hızlı hat aktivasyonu.</p>
+</div>
+<div class="card">
+<h3>Numara Taşıma</h3>
+<p>Operatör değişimi, kesintisiz geçiş.</p>
+</div>
+<div class="card">
+<h3>Ev İnterneti</h3>
+<p>Vodafone Net başvurularınızı kolayca yapın.</p>
+</div>
+</div>
 </div>
 
-<div class="card">
-<h2>Ev İnterneti</h2>
-<p>Vodafone Net başvuruları.</p>
-<button>Başvur</button>
+<div id="basvuru" class="container section">
+<h2>Hemen Başvur</h2>
+
+<div class="card form-card">
+<form>
+<div class="form-grid">
+<input placeholder="Ad Soyad">
+<input placeholder="Telefon">
+<select>
+<option>Hizmet Seçin</option>
+<option>Yeni Hat</option>
+<option>Numara Taşıma</option>
+<option>Ev İnterneti</option>
+</select>
+<input placeholder="İl">
+<input placeholder="İlçe">
+<input placeholder="Mahalle">
+<input placeholder="Sokak">
+<input placeholder="Bina No">
+<input placeholder="Daire No">
+</div>
+<br>
+<button class="btn">Başvur</button>
+</form>
+</div>
 </div>
 
+<div class="footer">
+<div class="container footer-grid">
+<div>
+<strong>Redstore İletişim</strong><br>
+Vodafone Yetkili Franchise Bayisi
+</div>
+<div class="small">
+Yeni müşteri başvurularınız için bizimle iletişime geçin.
+</div>
+</div>
 </div>
 
 </body>
