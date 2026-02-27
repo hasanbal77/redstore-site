@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Yeni Faturalı Hat | Redstore İletişim</title>
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+<div class="nav">
+<div class="container nav-inner">
+<div class="brand">
+<div>Redstore İletişim</div>
+<span class="badge">Vodafone Yetkili Franchise</span>
+</div>
+<div class="nav-links">
+<a href="./index.html">Ana Sayfa</a>
+<a href="#basvuru">Başvuru</a>
+</div>
+</div>
+</div>
+
+<div class="hero">
+<div class="container hero-grid">
+<div>
+<h1>Yeni Faturalı Hat Tesisi</h1>
+<p>Aynı gün hızlı aktivasyon. Aşağıdan paket seçip başvuru bırakabilirsiniz.</p>
+<div class="small">Not: Vodafone’dan otomatik tarife çekmeyi bir sonraki adımda deneyeceğiz.</div>
+</div>
+<div class="quick-actions">
+<div class="qa"><div class="icon">📱</div><div><strong>Hızlı işlem</strong><div class="small">Şubeden destek</div></div></div>
+<div class="qa"><div class="icon">🧾</div><div><strong>Kurumsal güven</strong><div class="small">Yetkili bayi</div></div></div>
+</div>
+</div>
+</div>
+
+<div class="container section">
+<h2>Tarifeler</h2>
+<div class="grid">
+<div class="card">
+<h3>Örnek Tarife 1</h3>
+<p>20 GB • 1000 DK • 250 SMS</p>
+<p><strong>₺XXX / ay</strong></p>
+<button class="btn" onclick="selectPlan('Örnek Tarife 1')">Seç</button>
+</div>
+<div class="card">
+<h3>Örnek Tarife 2</h3>
+<p>40 GB • 2000 DK • 250 SMS</p>
+<p><strong>₺XXX / ay</strong></p>
+<button class="btn" onclick="selectPlan('Örnek Tarife 2')">Seç</button>
+</div>
+<div class="card">
+<h3>Örnek Tarife 3</h3>
+<p>60 GB • 3000 DK • 250 SMS</p>
+<p><strong>₺XXX / ay</strong></p>
+<button class="btn" onclick="selectPlan('Örnek Tarife 3')">Seç</button>
+</div>
+</div>
+</div>
+
+<div id="basvuru" class="container section">
+<h2>Başvuru Formu</h2>
+
+<div class="card form-card">
+<form id="leadForm" method="POST" enctype="multipart/form-data">
+<div class="form-grid">
+<input name="adsoyad" placeholder="Ad Soyad" required>
+<input name="telefon" placeholder="Telefon (05xx...)" required>
+
+<input name="secili_paket" id="seciliPaket" placeholder="Seçilen Paket" readonly required>
+<input name="tckn" placeholder="T.C. Kimlik No" required>
+
+<input name="il" placeholder="İl" required>
+<input name="ilce" placeholder="İlçe" required>
+<input name="mahalle" placeholder="Mahalle" required>
+<input name="sokak" placeholder="Sokak / Cadde" required>
+<input name="binaNo" placeholder="Bina No" required>
+<input name="daireNo" placeholder="Daire No" required>
+
+<div>
+<label>Kimlik Ön Yüz</label>
+<input type="file" name="kimlik_on" accept="image/*,.pdf" required>
+</div>
+<div>
+<label>Kimlik Arka Yüz</label>
+<input type="file" name="kimlik_arka" accept="image/*,.pdf" required>
+</div>
+</div>
+
+<hr>
+<button class="btn" type="submit">Başvuruyu Gönder</button>
+<div class="small" id="msg"></div>
+</form>
+</div>
+</div>
+
+<script>
+function selectPlan(name){
+document.getElementById('seciliPaket').value = name;
+location.hash = '#basvuru';
+}
+</script>
+
+</body>
+</html>
