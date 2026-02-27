@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cihaz Kampanyaları | Redstore İletişim</title>
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+<div class="nav">
+<div class="container nav-inner">
+<div class="brand">
+<div>Redstore İletişim</div>
+<span class="badge">Vodafone Yetkili Franchise</span>
+</div>
+<div class="nav-links">
+<a href="./index.html">Ana Sayfa</a>
+</div>
+</div>
+</div>
+
+<div class="hero">
+<div class="container hero-grid">
+<div>
+<h1>Tarifeye Ek Cihaz Kampanyaları</h1>
+<p>Faturaya ek cihaz fırsatlarından birini seçip başvurunuzu oluşturabilirsiniz.</p>
+</div>
+</div>
+</div>
+
+<div class="container section">
+<h2>Cihaz Seçenekleri</h2>
+<div class="grid">
+
+<div class="card">
+<h3>iPhone Serisi</h3>
+<p>Faturaya ek ödeme</p>
+<button class="btn" onclick="selectPlan('iPhone')">Seç</button>
+</div>
+
+<div class="card">
+<h3>Samsung Serisi</h3>
+<p>Avantajlı kampanya</p>
+<button class="btn" onclick="selectPlan('Samsung')">Seç</button>
+</div>
+
+<div class="card">
+<h3>Diğer Modeller</h3>
+<p>Farklı seçenekler</p>
+<button class="btn" onclick="selectPlan('Diğer')">Seç</button>
+</div>
+
+</div>
+</div>
+
+<div id="basvuru" class="container section">
+<h2>Başvuru</h2>
+<div class="card">
+<form>
+<div class="form-grid">
+<input placeholder="Ad Soyad" required>
+<input placeholder="Telefon" required>
+<input id="paket" placeholder="Seçilen Cihaz" readonly required>
+</div>
+<br>
+<button class="btn">Başvur</button>
+</form>
+</div>
+</div>
+
+<script>
+function selectPlan(name){
+document.getElementById('paket').value = name;
+location.hash = '#basvuru';
+}
+</script>
+
+</body>
+</html>
