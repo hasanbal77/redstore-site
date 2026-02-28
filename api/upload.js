@@ -1,4 +1,4 @@
-import { put } from "@vercel/blob";
+import { put } from '@vercel/blob';
 
 export const config = {
 api: {
@@ -6,26 +6,33 @@ bodyParser: false,
 },
 };
 
-export default async function handler(req, res) {
+export default async function handler(req) {
+
+if (req.method !== 'POST') {
+return new Response('Method not allowed', { status: 405 });
+}
+
 try {
-if (req.method !== "POST") {
-return res.status(405).json({ error: "Method not allowed" });
+const formData = await req.formData();
+const file = formData.get("file");
+
+if (!file) {
+return new Response(JSON.stringify({ error: "Dosya yok" }), { status: 400 });
 }
 
-const filename = req.headers["x-vercel-filename"];
-
-if (!filename) {
-return res.status(400).json({ error: "No filename provided" });
-}
-
-const blob = await put(filename, req, {
-access: "public",
+const blob = await put(file.name, file, {
+access: 'public',
 });
 
-return res.status(200).json({ url: blob.url });
+return new Response(JSON.stringify({
+url: blob.url
+}), {
+headers: { "Content-Type": "application/json" }
+});
 
 } catch (err) {
-console.error(err);
-return res.status(500).json({ error: "Upload failed" });
+return new Response(JSON.stringify({
+error: err.message
+}), { status: 500 });
 }
 }
