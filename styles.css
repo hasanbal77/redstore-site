@@ -1,39 +1,93 @@
-:root{
---vodafone:#e60000;
---bg:#f6f7fb;
---text:#111827;
---muted:#6b7280;
---card:#ffffff;
---border:#e5e7eb;
+/* Vodafone hissi veren modern kurumsal tema */
+
+body {
+margin: 0;
+font-family: Arial, Helvetica, sans-serif;
+background: #f5f6f7;
+color: #1a1a1a;
 }
 
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial, Helvetica, sans-serif;background:var(--bg);color:var(--text)}
-a{color:inherit;text-decoration:none}
-.container{max-width:1100px;margin:0 auto;padding:16px}
-.nav{
-background:#fff;border-bottom:1px solid var(--border);
-position:sticky;top:0;z-index:50
+/* HEADER */
+.header {
+background: white;
+height: 70px;
+display: flex;
+align-items: center;
+padding: 0 40px;
+box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
-.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:700}
-.badge{font-size:12px;background:rgba(230,0,0,.08);color:var(--vodafone);padding:4px 8px;border-radius:999px;border:1px solid rgba(230,0,0,.18)}
-.nav-links{display:flex;gap:14px;flex-wrap:wrap}
-.btn{
-display:inline-flex;align-items:center;justify-content:center;
-border:1px solid var(--vodafone);
-background:var(--vodafone);color:#fff;
-padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer
+
+.logo {
+font-size: 20px;
+font-weight: bold;
 }
-.btn.secondary{background:#fff;color:var(--vodafone)}
-.hero{
-background:linear-gradient(135deg, rgba(230,0,0,.12), rgba(230,0,0,0));
-border-bottom:1px solid var(--border)
+
+.logo span {
+color: #e60000;
 }
-.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:center;padding:26px 0}
-.hero h1{margin:0 0 10px;font-size:34px;line-height:1.15}
-.hero p{margin:0 0 16px;color:var(--muted);font-size:16px}
-.quick-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.qa{
-background:#fff;border:1px solid var(--border);border-radius:14px;
-padding:14px;display:flex;gap:10px;
+
+/* HERO */
+.hero {
+background: linear-gradient(90deg, #ffffff 60%, #fafafa 100%);
+padding: 80px 40px;
+}
+
+.hero h1 {
+font-size: 40px;
+margin-bottom: 10px;
+}
+
+.hero p {
+font-size: 18px;
+color: #555;
+}
+
+/* BUTTON */
+.btn {
+background: #e60000;
+color: white;
+padding: 14px 28px;
+border-radius: 8px;
+border: none;
+font-weight: bold;
+cursor: pointer;
+transition: 0.3s;
+}
+
+.btn:hover {
+background: #cc0000;
+}
+
+/* SERVICES */
+.services {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 20px;
+padding: 40px;
+}
+
+.card {
+background: white;
+padding: 30px;
+border-radius: 12px;
+text-align: center;
+transition: 0.3s;
+box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.card:hover {
+transform: translateY(-4px);
+}
+
+/* RESPONSIVE */
+@media(max-width: 900px) {
+.services {
+grid-template-columns: repeat(2, 1fr);
+}
+}
+
+@media(max-width: 500px) {
+.services {
+grid-template-columns: 1fr;
+}
+}
