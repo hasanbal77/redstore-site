@@ -1,11 +1,5 @@
 import { put } from '@vercel/blob';
 
-export const config = {
-api: {
-bodyParser: false,
-},
-};
-
 export default async function handler(req) {
 
 if (req.method !== 'POST') {
